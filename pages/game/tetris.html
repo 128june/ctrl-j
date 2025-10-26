@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>테트리스 - ctrl-j</title>
+    <link rel="stylesheet" href="cdn/css/tetris.css">
+</head>
+<body>
+    <div class="game-container">
+        <h1>테트리스</h1>
+        <div class="game-area">
+            <canvas id="tetris" width="300" height="600"></canvas>
+            <div class="game-info">
+                <div class="score">점수: <span id="score">0</span></div>
+                <div class="level">레벨: <span id="level">1</span></div>
+                <div class="lines">라인: <span id="lines">0</span></div>
+                <div class="controls">
+                    <h3>조작법</h3>
+                    <p>← → : 이동</p>
+                    <p>↓ : 빠른 낙하</p>
+                    <p>↑ : 회전</p>
+                    <p>스페이스 : 즉시 낙하</p>
+                </div>
+            </div>
+        </div>
+        <button id="startBtn">게임 시작</button>
+        <button id="pauseBtn">일시정지</button>
+    </div>
+    <script src="cdn/js/tetris.js"></script>
+</body>
+</html>
