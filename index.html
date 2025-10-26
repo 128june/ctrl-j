@@ -3,31 +3,63 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ctrl-j</title>
+    <title>CTRL-J</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/responsive.css">
 </head>
 <body>
     <header>
-        <h1>ctrl-j</h1>
+        <h1><strong>CTRL-J</strong></h1>
+        <button class="menu-toggle">☰</button>
+        <nav class="nav-container">
+            <ul class="nav-menu">
+                <li><a href="#">소개</a>
+                    <ul class="dropdown">
+                        <li><a href="pages/about/intro.html">ctrl-j 소개</a></li>
+                        <li><a href="pages/about/profile.html">운영자</a></li>
+                        <li><a href="pages/about/vision.html">비전/가치</a></li>
+                    </ul>
+                </li>
+                <li><a href="#">게임</a>
+                    <ul class="dropdown">
+                        <li><a href="pages/game/tetris.html">테트리스</a></li>
+                        <li><a href="pages/game/mini.html">미니 게임</a></li>
+                        <li><a href="pages/game/archive.html">아카이브</a></li>
+                    </ul>
+                </li>
+                <li><a href="#">작업물</a>
+                    <ul class="dropdown">
+                        <li><a href="pages/works/web.html">웹 프로젝트</a></li>
+                        <li><a href="pages/works/code.html">코드 스니펫</a></li>
+                        <li><a href="pages/works/design.html">디자인</a></li>
+                    </ul>
+                </li>
+                <li><a href="#">블로그</a>
+                    <ul class="dropdown">
+                        <li><a href="pages/blog/tech.html">기술 노트</a></li>
+                        <li><a href="pages/blog/daily.html">일상/잡담</a></li>
+                        <li><a href="pages/blog/notice.html">공지사항</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
     </header>
     
     <main>
-        <section>
-            <h2>환영합니다</h2>
-            <p>ctrl-j 웹페이지입니다.</p>
-        </section>
-        
-        <section>
+        <section class="games">
             <h2>게임</h2>
-            <ul>
-                <li><a href="pages/game/tetris.html">테트리스</a></li>
-            </ul>
+            <div class="game-scroll-container">
+                <div class="game-buttons">
+                    <a href="pages/game/tetris.html" class="game-btn">🎮 테트리스</a>
+                    <a href="pages/game/mini.html" class="game-btn">🎲 미니 게임</a>
+                    <a href="pages/game/archive.html" class="game-btn">📚 아카이브</a>
+                </div>
+            </div>
         </section>
     </main>
     
     <footer>
-        <p>&copy; 2024 ctrl-j</p>
+        <p>© 2025 CTRL-J. All Rights Reserved.</p>
     </footer>
     
     <script src="js/main.js"></script>

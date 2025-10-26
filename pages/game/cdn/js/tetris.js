@@ -86,10 +86,14 @@ class Tetris {
         const [m, o] = [player.matrix, player.pos];
         for (let y = 0; y < m.length; ++y) {
             for (let x = 0; x < m[y].length; ++x) {
-                if (m[y][x] !== 0 &&
-                   (grid[y + o.y] &&
-                    grid[y + o.y][x + o.x]) !== 0) {
-                    return true;
+                if (m[y][x] !== 0) {
+                    // 경계 검사
+                    if (y + o.y >= grid.length || 
+                        x + o.x < 0 || 
+                        x + o.x >= grid[0].length ||
+                        (grid[y + o.y] && grid[y + o.y][x + o.x] !== 0)) {
+                        return true;
+                    }
                 }
             }
         }
@@ -243,10 +247,19 @@ class Tetris {
             } else if (event.keyCode === 38) {
                 this.playerRotate(1);
             } else if (event.keyCode === 32) {
-                while (!this.collide(this.grid, this.player)) {
+                // 스페이스바: 즉시 낙하 (하드 드롭)
+                event.preventDefault();
+                let dropCount = 0;
+                const maxDrop = 20; // 최대 낙하 제한
+                
+                while (dropCount < maxDrop) {
                     this.player.pos.y++;
+                    if (this.collide(this.grid, this.player)) {
+                        this.player.pos.y--;
+                        break;
+                    }
+                    dropCount++;
                 }
-                this.player.pos.y--;
                 this.playerDrop();
             }
         });
