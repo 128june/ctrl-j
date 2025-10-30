@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI ChatBot - CTRL-J</title>
+    <link rel="stylesheet" href="../../cdn/css/style.css">
+    <link rel="stylesheet" href="../../cdn/css/responsive.css">
+    <link rel="stylesheet" href="cdn/css/chatbot.css">
+</head>
+<body>
+    <header>
+        <h1><a href="../../index.html"><strong>CTRL-J</strong></a></h1>
+        <button class="menu-toggle">☰</button>
+        <nav class="nav-container">
+            <ul class="nav-menu">
+                <li><a href="../../index.html">홈</a></li>
+                <li><a href="../about/intro.html">소개</a></li>
+                <li><a href="../game/tetris.html">게임</a></li>
+                <li><a href="#" class="active">AI 챗봇</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <main class="chatbot-main">
+        <div class="chatbot-container">
+            <div class="chatbot-header">
+                <h2>AI ChatBot</h2>
+                <p>궁금한 것이 있으시면 언제든 물어보세요!</p>
+            </div>
+            
+            <div class="chat-container">
+                <div class="chat-messages" id="chatMessages">
+                    <div class="message bot-message">
+                        <div class="message-bubble">
+                            안녕하세요! 무엇을 도와드릴까요?
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="chat-input">
+                    <textarea id="messageInput" placeholder="메시지를 입력하세요..." onkeydown="handleKeyPress(event)"></textarea>
+                    <button onclick="sendMessage()">전송</button>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <footer>
+        <p>© 2025 CTRL-J. All Rights Reserved.</p>
+    </footer>
+    
+    <script src="../../cdn/js/main.js"></script>
+    <script src="cdn/js/chatbot.js"></script>
+</body>
+</html>
