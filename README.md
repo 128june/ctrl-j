@@ -46,6 +46,13 @@ ctrl-j/
   - 모바일 터치 숫자 패드 지원
   - 자동 완성 감지
 
+- **Chosen**: `pages/game/chosen/chosen.html`
+  - URL 기반 텍스트 로그라이크 RPG
+  - 회귀 시스템 (3가지 출신: 귀족, 빈민, 학자)
+  - 시드 기반 랜덤 이벤트 및 스탯 체크
+  - 태그 시스템으로 조건부 분기
+  - Base64 URL Safe 인코딩으로 상태 저장
+
 ## 도구
 - **AI 챗봇**: `pages/chatbot/ai-chatbot.html`
   - Gemini API 기반 대화형 AI 인터페이스
@@ -66,6 +73,7 @@ ctrl-j/
 - 반응형 웹 디자인
 
 ## 최근 업데이트
+- Chosen 텍스트 로그라이크 게임 추가 (URL 상태 저장)
 - 스도쿠 게임 추가 (모바일 터치 패드 지원)
 - 테트리스 난이도 시스템 및 가이드 추가
 - AI 챗봇 추가 (Gemini API 연동)
