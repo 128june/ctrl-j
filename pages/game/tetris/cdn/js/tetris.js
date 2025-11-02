@@ -11,6 +11,13 @@ class Tetris {
         this.lastTime = 0;
         this.paused = false;
         this.gameOver = false;
+        this.difficulty = 'hard';
+        this.difficultySettings = {
+            easy: { baseSpeed: 1200, levelMultiplier: 0.75, scoreMultiplier: 0.8 },
+            normal: { baseSpeed: 1000, levelMultiplier: 0.85, scoreMultiplier: 1.0 },
+            hard: { baseSpeed: 800, levelMultiplier: 0.9, scoreMultiplier: 1.2 },
+            expert: { baseSpeed: 600, levelMultiplier: 0.93, scoreMultiplier: 1.5 }
+        };
         
         this.colors = [
             null,
@@ -178,6 +185,7 @@ class Tetris {
     
     gridSweep() {
         let rowCount = 1;
+        let linesCleared = 0;
         outer: for (let y = this.grid.length -1; y > 0; --y) {
             for (let x = 0; x < this.grid[y].length; ++x) {
                 if (this.grid[y][x] === 0) {
@@ -189,9 +197,18 @@ class Tetris {
             this.grid.unshift(row);
             ++y;
             
-            this.lines += rowCount;
-            this.score += rowCount * 10 * this.level;
+            linesCleared += rowCount;
+            this.score += Math.floor(rowCount * 10 * this.level * this.difficultySettings[this.difficulty].scoreMultiplier);
             rowCount *= 2;
+        }
+        
+        this.lines += linesCleared;
+        
+        // 레벨업 (10라인마다)
+        const newLevel = Math.floor(this.lines / 10) + 1;
+        if (newLevel > this.level) {
+            this.level = newLevel;
+            this.updateDropSpeed();
         }
     }
     
@@ -236,6 +253,11 @@ class Tetris {
         document.getElementById('lines').innerText = this.lines;
     }
     
+    updateDropSpeed() {
+        const settings = this.difficultySettings[this.difficulty];
+        this.dropInterval = Math.max(100, settings.baseSpeed * Math.pow(settings.levelMultiplier, this.level - 1));
+    }
+    
     setupControls() {
         document.addEventListener('keydown', event => {
             if (event.keyCode === 37) {
@@ -271,6 +293,8 @@ class Tetris {
         document.getElementById('pauseBtn').addEventListener('click', () => {
             this.pause();
         });
+        
+
     }
     
     start() {
@@ -280,6 +304,9 @@ class Tetris {
         this.score = 0;
         this.level = 1;
         this.lines = 0;
+        this.difficulty = 'hard';
+        document.getElementById('guide').style.display = 'block';
+        this.updateDropSpeed();
         this.playerReset();
         this.updateScore();
         this.update();
