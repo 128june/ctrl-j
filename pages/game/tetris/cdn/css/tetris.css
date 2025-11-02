@@ -44,6 +44,26 @@ h1 {
     font-size: 18px;
 }
 
+.guide {
+    margin: 15px 0;
+    padding: 15px;
+    background: #444;
+    border-radius: 8px;
+    border-left: 4px solid #00ff00;
+}
+
+.guide h3 {
+    margin: 0 0 10px 0;
+    color: #00ff00;
+    font-size: 16px;
+}
+
+.guide p {
+    margin: 5px 0;
+    font-size: 13px;
+    line-height: 1.4;
+}
+
 .controls {
     margin-top: 20px;
     text-align: left;
@@ -118,6 +138,19 @@ button:disabled {
         margin: 8px 0;
     }
     
+    .guide {
+        margin: 10px 0;
+        padding: 10px;
+    }
+    
+    .guide h3 {
+        font-size: 14px;
+    }
+    
+    .guide p {
+        font-size: 11px;
+    }
+    
     .controls {
         margin-top: 15px;
     }
@@ -161,6 +194,19 @@ button:disabled {
     
     .score, .level, .lines {
         font-size: 14px;
+    }
+    
+    .guide {
+        margin: 8px 0;
+        padding: 8px;
+    }
+    
+    .guide h3 {
+        font-size: 12px;
+    }
+    
+    .guide p {
+        font-size: 10px;
     }
     
     .controls h3 {
