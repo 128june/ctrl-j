@@ -19,11 +19,12 @@ ctrl-j/
 │   │   └── cdn/       # 게임 리소스
 │   │       ├── css/
 │   │       └── js/
-│   ├── chatbot/       # AI 챗봇
-│   │   ├── ai-chatbot.html
-│   │   └── cdn/
-│   │       ├── css/
-│   │       └── js/
+│   ├── tools/         # 도구
+│   │   └── chatbot/   # AI 챗봇
+│   │       ├── ai-chatbot.html
+│   │       └── cdn/
+│   │           ├── css/
+│   │           └── js/
 │   └── about/         # 소개 페이지
 │       ├── intro.html
 │       ├── profile.html
@@ -54,7 +55,7 @@ ctrl-j/
   - Base64 URL Safe 인코딩으로 상태 저장
 
 ## 도구
-- **AI 챗봇**: `pages/chatbot/ai-chatbot.html`
+- **AI 챗봇**: `pages/tools/chatbot/ai-chatbot.html`
   - Gemini API 기반 대화형 AI 인터페이스
   - 실시간 메시지 전송/수신
   - 재시도 로직 및 에러 처리
