@@ -15,10 +15,21 @@ ctrl-j/
 │       └── utils.js
 ├── pages/             # 추가 페이지들
 │   ├── game/          # 게임 페이지
-│   │   ├── tetris.html
-│   │   └── cdn/       # 게임 리소스
-│   │       ├── css/
-│   │       └── js/
+│   │   ├── tetris/    # 테트리스
+│   │   │   ├── tetris.html
+│   │   │   └── cdn/
+│   │   │       ├── css/
+│   │   │       └── js/
+│   │   ├── sudoku/    # 스도쿠
+│   │   │   ├── sudoku.html
+│   │   │   └── cdn/
+│   │   │       ├── css/
+│   │   │       └── js/
+│   │   └── text_roguelike_adventure/  # 텍스트 로그라이크
+│   │       ├── index.html
+│   │       └── cdn/
+│   │           ├── css/
+│   │           └── js/
 │   ├── tools/         # 도구
 │   │   └── chatbot/   # AI 챗봇
 │   │       ├── ai-chatbot.html
@@ -47,7 +58,7 @@ ctrl-j/
   - 모바일 터치 숫자 패드 지원
   - 자동 완성 감지
 
-- **Chosen**: `pages/game/chosen/chosen.html`
+- **Text Roguelike Adventure**: `pages/game/text_roguelike_adventure/index.html`
   - URL 기반 텍스트 로그라이크 RPG
   - 회귀 시스템 (3가지 출신: 귀족, 빈민, 학자)
   - 시드 기반 랜덤 이벤트 및 스탯 체크
@@ -74,7 +85,7 @@ ctrl-j/
 - 반응형 웹 디자인
 
 ## 최근 업데이트
-- Chosen 텍스트 로그라이크 게임 추가 (URL 상태 저장)
+- Text Roguelike Adventure 게임 추가 (URL 상태 저장)
 - 스도쿠 게임 추가 (모바일 터치 패드 지원)
 - 테트리스 난이도 시스템 및 가이드 추가
 - AI 챗봇 추가 (Gemini API 연동)
