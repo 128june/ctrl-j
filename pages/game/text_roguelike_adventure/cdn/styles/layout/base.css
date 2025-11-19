@@ -1,0 +1,23 @@
+/* 기본 스타일 */
+body {
+    margin: 0;
+    padding: 20px;
+    font-family: 'Courier New', monospace;
+    background: #1a1a1a;
+    color: #e0e0e0;
+    line-height: 1.6;
+}
+
+.game-container {
+    max-width: 800px;
+    margin: 0 auto;
+    background: #2a2a2a;
+    border: 2px solid #444;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.game-content {
+    padding: 30px;
+    min-height: 400px;
+}

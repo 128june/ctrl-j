@@ -1,0 +1,28 @@
+/* 헤더 및 스탯 */
+.game-header {
+    background: #333;
+    padding: 20px;
+    border-bottom: 2px solid #444;
+}
+
+.game-header h1 {
+    margin: 0 0 15px 0;
+    color: #ff6b6b;
+    text-align: center;
+    font-size: 2em;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+}
+
+.stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 10px;
+    font-size: 14px;
+}
+
+.stat {
+    background: #444;
+    padding: 8px;
+    border-radius: 4px;
+    text-align: center;
+}

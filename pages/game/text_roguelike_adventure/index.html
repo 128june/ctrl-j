@@ -4,18 +4,33 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chosen - 텍스트 로그라이크</title>
-    <link rel="stylesheet" href="cdn/css/text_roguelike_adventure.css">
+    <!-- Layout Styles -->
+    <link rel="stylesheet" href="cdn/styles/layout/base.css">
+    <link rel="stylesheet" href="cdn/styles/layout/header.css">
+    <link rel="stylesheet" href="cdn/styles/layout/footer.css">
+    
+    <!-- Component Styles -->
+    <link rel="stylesheet" href="cdn/styles/components/story.css">
+    <link rel="stylesheet" href="cdn/styles/components/choices.css">
+    <link rel="stylesheet" href="cdn/styles/components/loading.css">
+    
+    <!-- Utility Styles -->
+    <link rel="stylesheet" href="cdn/styles/utils/responsive.css">
 </head>
 <body>
     <div class="game-container">
         <header class="game-header">
-            <h1>Text Roguelike Adventure</h1>
+            <h1 id="gameTitle">Text Roguelike Adventure</h1>
             <div class="stats" id="stats"></div>
         </header>
         
         <main class="game-content">
-            <div class="story-text" id="storyText"></div>
-            <div class="choices" id="choices"></div>
+            <div class="loading" id="loading">
+                <h2>게임 데이터 로딩 중...</h2>
+                <div class="spinner"></div>
+            </div>
+            <div class="story-text" id="storyText" style="display:none"></div>
+            <div class="choices" id="choices" style="display:none"></div>
         </main>
         
         <footer class="game-footer">
@@ -24,7 +39,18 @@
         </footer>
     </div>
     
-    <script src="cdn/js/gameData.js"></script>
-    <script src="cdn/js/text_roguelike_adventure.js"></script>
+    <!-- Data Layer -->
+    <script src="cdn/scripts/data/dataManager.js"></script>
+    <script src="cdn/scripts/data/sheetLoader.js"></script>
+    
+    <!-- Core Game Logic -->
+    <script src="cdn/scripts/core/gameState.js"></script>
+    <script src="cdn/scripts/core/gameLogic.js"></script>
+    
+    <!-- UI Layer -->
+    <script src="cdn/scripts/ui/gameRenderer.js"></script>
+    
+    <!-- Game Controller (depends on all above) -->
+    <script src="cdn/scripts/core/gameController.js"></script>
 </body>
 </html>
