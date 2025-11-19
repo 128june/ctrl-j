@@ -50,12 +50,15 @@ class DataManager {
             backgrounds: []
         };
         
+        let sheetsLoaded = 0;
+        
         // Events 시트 (gid=265052090) 직접 로드
         try {
             const csvText = await this.fetchSheet(sheetId, 265052090);
             const rows = this.parseCSV(csvText);
             console.log('Events 시트 데이터:', rows);
             this.parseSheetData(rows, gameData);
+            sheetsLoaded++;
         } catch (e) {
             console.error('Events 시트 로드 실패:', e);
         }
@@ -66,8 +69,15 @@ class DataManager {
             const rows = this.parseCSV(csvText);
             console.log('Character 시트 데이터:', rows);
             this.parseSheetData(rows, gameData);
+            sheetsLoaded++;
         } catch (e) {
             console.error('Character 시트 로드 실패:', e);
+        }
+        
+        // 모든 시트 로드 실패 시 로컬 백업 데이터 사용
+        if (sheetsLoaded === 0) {
+            console.warn('Google Sheets 로드 실패, 로컬 백업 데이터 사용');
+            return this.getLocalBackupData();
         }
         
         console.log('Origins 개수:', Object.keys(gameData.origins).length);
@@ -76,6 +86,47 @@ class DataManager {
 
         console.log('최종 게임 데이터:', gameData);
         return gameData;
+    }
+    
+    // 로컬 백업 데이터 반환
+    getLocalBackupData() {
+        return {
+            title: 'Text Roguelike Adventure',
+            origins: {
+                '귀족': { desc: '부유한 가문 출신', str: 8, int: 12, dex: 10, karma: 5 },
+                '빈민': { desc: '가난한 서민 출신', str: 12, int: 8, dex: 10, karma: -2 },
+                '학자': { desc: '지식을 추구하는 학자', str: 8, int: 14, dex: 8, karma: 0 }
+            },
+            events: {
+                'start': {
+                    name: '모험의 시작',
+                    desc: '당신은 새로운 모험을 시작합니다.',
+                    choices: [
+                        {
+                            id: 'explore',
+                            text: '탐험하기',
+                            success: { target: 'forest', hp: 0, karma: 1, int: 0, tags: [] },
+                            failure: { target: 'forest', hp: 0, karma: 0, int: 0, tags: [] }
+                        }
+                    ]
+                },
+                'forest': {
+                    name: '숲 속에서',
+                    desc: '깊은 숲에서 길을 잃었습니다.',
+                    choices: [
+                        {
+                            id: 'search',
+                            text: '길 찾기',
+                            checkStat: 'int',
+                            checkValue: 10,
+                            success: { target: 'village', hp: 0, karma: 0, int: 1, tags: [] },
+                            failure: { target: 'lost', hp: -5, karma: 0, int: 0, tags: [] }
+                        }
+                    ]
+                }
+            },
+            backgrounds: []
+        };
     }
     
     parseSheetData(rows, gameData) {
@@ -192,10 +243,31 @@ class DataManager {
     }
     
     async fetchSheet(sheetId, gid) {
-        const url = `https://docs.google.com/spreadsheets/d/${sheetId}/export?format=csv&gid=${gid}`;
-        const response = await fetch(url);
-        if (!response.ok) throw new Error(`HTTP ${response.status}`);
-        return await response.text();
+        // CORS 문제 해결을 위한 여러 방법 시도
+        const urls = [
+            // 1. 원본 URL (CORS 허용된 도메인에서만 작동)
+            `https://docs.google.com/spreadsheets/d/${sheetId}/export?format=csv&gid=${gid}`,
+            // 2. CORS 프록시 사용
+            `https://api.allorigins.win/raw?url=${encodeURIComponent(`https://docs.google.com/spreadsheets/d/${sheetId}/export?format=csv&gid=${gid}`)}`,
+            // 3. 다른 CORS 프록시
+            `https://corsproxy.io/?${encodeURIComponent(`https://docs.google.com/spreadsheets/d/${sheetId}/export?format=csv&gid=${gid}`)}`
+        ];
+        
+        for (const url of urls) {
+            try {
+                console.log(`시도 중: ${url}`);
+                const response = await fetch(url);
+                if (!response.ok) throw new Error(`HTTP ${response.status}`);
+                const text = await response.text();
+                console.log(`성공: ${url}`);
+                return text;
+            } catch (error) {
+                console.warn(`실패: ${url}`, error.message);
+                continue;
+            }
+        }
+        
+        throw new Error('모든 URL에서 데이터 로드 실패');
     }
     
     parseCSV(csvText) {
