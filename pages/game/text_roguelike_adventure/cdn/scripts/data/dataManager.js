@@ -243,13 +243,11 @@ class DataManager {
     }
     
     async fetchSheet(sheetId, gid) {
-        // CORS 문제 해결을 위한 여러 방법 시도
+        // CORS 프록시만 사용 (원본 URL은 CORS 오류 발생)
         const urls = [
-            // 1. 원본 URL (CORS 허용된 도메인에서만 작동)
-            `https://docs.google.com/spreadsheets/d/${sheetId}/export?format=csv&gid=${gid}`,
-            // 2. CORS 프록시 사용
+            // 1. CORS 프록시 사용
             `https://api.allorigins.win/raw?url=${encodeURIComponent(`https://docs.google.com/spreadsheets/d/${sheetId}/export?format=csv&gid=${gid}`)}`,
-            // 3. 다른 CORS 프록시
+            // 2. 다른 CORS 프록시
             `https://corsproxy.io/?${encodeURIComponent(`https://docs.google.com/spreadsheets/d/${sheetId}/export?format=csv&gid=${gid}`)}`
         ];
         
