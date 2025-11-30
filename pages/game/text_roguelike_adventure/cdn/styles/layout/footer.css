@@ -1,0 +1,22 @@
+/* 푸터 */
+.game-footer {
+    background: #333;
+    padding: 15px;
+    border-top: 2px solid #444;
+    text-align: center;
+}
+
+.game-footer button {
+    background: #ff6b6b;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    margin: 0 5px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: inherit;
+}
+
+.game-footer button:hover {
+    background: #ff5252;
+}

@@ -1,0 +1,18 @@
+/* 반응형 디자인 */
+@media (max-width: 768px) {
+    body {
+        padding: 10px;
+    }
+    
+    .game-content {
+        padding: 20px;
+    }
+    
+    .story-text {
+        font-size: 14px;
+    }
+    
+    .stats {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}

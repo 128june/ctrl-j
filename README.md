@@ -15,15 +15,27 @@ ctrl-j/
 │       └── utils.js
 ├── pages/             # 추가 페이지들
 │   ├── game/          # 게임 페이지
-│   │   ├── tetris.html
-│   │   └── cdn/       # 게임 리소스
-│   │       ├── css/
-│   │       └── js/
-│   ├── chatbot/       # AI 챗봇
-│   │   ├── ai-chatbot.html
-│   │   └── cdn/
-│   │       ├── css/
-│   │       └── js/
+│   │   ├── tetris/    # 테트리스
+│   │   │   ├── tetris.html
+│   │   │   └── cdn/
+│   │   │       ├── css/
+│   │   │       └── js/
+│   │   ├── sudoku/    # 스도쿠
+│   │   │   ├── sudoku.html
+│   │   │   └── cdn/
+│   │   │       ├── css/
+│   │   │       └── js/
+│   │   └── text_roguelike_adventure/  # 텍스트 로그라이크
+│   │       ├── index.html
+│   │       └── cdn/
+│   │           ├── css/
+│   │           └── js/
+│   ├── tools/         # 도구
+│   │   └── chatbot/   # AI 챗봇
+│   │       ├── ai-chatbot.html
+│   │       └── cdn/
+│   │           ├── css/
+│   │           └── js/
 │   └── about/         # 소개 페이지
 │       ├── intro.html
 │       ├── profile.html
@@ -46,7 +58,7 @@ ctrl-j/
   - 모바일 터치 숫자 패드 지원
   - 자동 완성 감지
 
-- **Chosen**: `pages/game/chosen/chosen.html`
+- **Text Roguelike Adventure**: `pages/game/text_roguelike_adventure/index.html`
   - URL 기반 텍스트 로그라이크 RPG
   - 회귀 시스템 (3가지 출신: 귀족, 빈민, 학자)
   - 시드 기반 랜덤 이벤트 및 스탯 체크
@@ -54,7 +66,7 @@ ctrl-j/
   - Base64 URL Safe 인코딩으로 상태 저장
 
 ## 도구
-- **AI 챗봇**: `pages/chatbot/ai-chatbot.html`
+- **AI 챗봇**: `pages/tools/chatbot/ai-chatbot.html`
   - Gemini API 기반 대화형 AI 인터페이스
   - 실시간 메시지 전송/수신
   - 재시도 로직 및 에러 처리
@@ -73,7 +85,7 @@ ctrl-j/
 - 반응형 웹 디자인
 
 ## 최근 업데이트
-- Chosen 텍스트 로그라이크 게임 추가 (URL 상태 저장)
+- Text Roguelike Adventure 게임 추가 (URL 상태 저장)
 - 스도쿠 게임 추가 (모바일 터치 패드 지원)
 - 테트리스 난이도 시스템 및 가이드 추가
 - AI 챗봇 추가 (Gemini API 연동)
