@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mysterious Old Study Room</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div id="game-container">
+        <div id="background">
+            <img src="assets/background.png" alt="Room Background">
+        </div>
+
+        <!-- Interactive Objects -->
+        <div id="game-objects">
+            <!-- Lock Object -->
+            <img id="obj-lock" src="assets/lock.png" alt="Lock" onclick="openPuzzle('lockBox')">
+
+            <!-- Hint Object -->
+            <img id="obj-hint" src="assets/hint.png" alt="Hint" onclick="showHint()">
+
+            <!-- Door Zone (remains a zone as it's part of the structure) -->
+            <div id="zone-door" onclick="tryExit()"></div>
+        </div>
+
+        <!-- Inventory -->
+        <div id="inventory-bar">
+            <h3>Inventory</h3>
+            <div id="inventory-slots">
+                <!-- Items will be added here -->
+            </div>
+        </div>
+
+        <!-- Message Area -->
+        <div id="message-area" class="hidden"></div>
+
+        <!-- Puzzles / Modals -->
+        <div id="modal-overlay" class="hidden">
+
+            <!-- Lock Puzzle -->
+            <div id="puzzle-lock" class="modal-content hidden">
+                <h2>Security Lock</h2>
+                <img src="assets/lock.png" alt="Lock" class="puzzle-image">
+                <p>Enter the 4-digit code:</p>
+                <input type="text" id="lock-input" maxlength="4" placeholder="0000">
+                <button onclick="checkAnswer('lockBox')">Unlock</button>
+                <button onclick="closeModal()">Close</button>
+            </div>
+
+            <!-- Hint View -->
+            <div id="view-hint" class="modal-content hidden">
+                <img src="assets/hint.png" alt="Hint" class="hint-image">
+                <p class="handwriting">"The year of the great fire... 1228"</p>
+                <button onclick="closeModal()">Close</button>
+            </div>
+
+            <!-- Item Found Modal -->
+            <div id="item-found" class="modal-content hidden">
+                <h2 id="found-title">Item Found!</h2>
+                <img id="found-image" src="" alt="Item">
+                <p id="found-desc"></p>
+                <button onclick="closeModal()">Collect</button>
+            </div>
+
+        </div>
+
+        <!-- Success Screen -->
+        <div id="success-screen" class="hidden">
+            <div class="success-content">
+                <h1>ESCAPED!</h1>
+                <p>You have successfully unlocked the door and found freedom.</p>
+                <button onclick="location.reload()">Play Again</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
