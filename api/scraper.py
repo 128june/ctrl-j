@@ -1,114 +1,64 @@
-from playwright.sync_api import sync_playwright
+import requests
 from bs4 import BeautifulSoup
-import time
 
 def scrape_diningcode(query):
     """
-    Scrapes Dining Code for the given query.
-    Returns a list of dictionaries containing restaurant details.
+    Scrapes Dining Code for the given query using simple requests.
+    This is much lighter than Playwright and works on Vercel Free Tier.
     """
-    results = []
+    url = f"https://www.diningcode.com/list.dc?query={query}"
+    print(f"Requesting {url}")
     
-    with sync_playwright() as p:
-        # Launch browser (headless for performance)
-        browser = p.chromium.launch(headless=True)
-        page = browser.new_page()
+    headers = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+    }
+    
+    try:
+        response = requests.get(url, headers=headers)
+        response.raise_for_status()
         
-        url = f"https://www.diningcode.com/list.dc?query={query}"
-        print(f"Navigating to {url}")
-        page.goto(url)
+        soup = BeautifulSoup(response.text, 'html.parser')
         
-        # Initial wait for content
-        # The user mentioned "Scroll__List__Section"
-        # We need to find the scrolling container. 
-        # Inspecting the user provided HTML snippet, the structure suggests a list.
-        # Often DiningCode lists are infinite scroll on the main window or a specific div.
-        # User said "Scroll__List__Section". Let's assume it's a class or ID.
-        # If we can't find it exactly, we try scrolling the window.
-        
-        # Wait for at least one item to load
-        try:
-            page.wait_for_selector('a.PoiBlock', timeout=10000)
-        except:
-            browser.close()
-            return {"error": "Timeout waiting for initial results"}
-
-        # Scroll loop to get ~100 items
-        # DiningCode loads more as you scroll.
-        target_count = 100
-        scroll_attempts = 0
-        max_attempts = 20
-        
-        while len(results) < target_count and scroll_attempts < max_attempts:
-            # Parse current content
-            content = page.content()
-            soup = BeautifulSoup(content, 'html.parser')
-            items = soup.select('a.PoiBlock')
-            
-            current_count = len(items)
-            print(f"Found {current_count} items so far...")
-            
-            if current_count >= target_count:
-                break
-                
-            # Scroll down
-            # Try scrolling the window
-            page.evaluate("window.scrollTo(0, document.body.scrollHeight)")
-            
-            # Try scrolling the specific section if it exists (based on user hint)
-            # User said "Scroll__List__Section". 
-            # We'll try to find an element with that class/id pattern just in case
-            page.evaluate("""
-                const el = document.querySelector('.Scroll__List__Section');
-                if (el) el.scrollTop = el.scrollHeight;
-            """)
-            
-            time.sleep(1.5) # Wait for network load
-            scroll_attempts += 1
-            
-        # Final parse
-        content = page.content()
-        soup = BeautifulSoup(content, 'html.parser')
+        # Select items. The selector might need adjustment based on static HTML structure.
+        # User provided snippet shows <a class="sc-eoVZPG kbaRYT PoiBlock" ...>
+        # Let's try selecting by class "PoiBlock" which seems consistent.
         items = soup.select('a.PoiBlock')
         
-        print(f"Final parse: {len(items)} items found.")
+        results = []
         
-        for index, item in enumerate(items[:100]):
+        # Note: Without JS scrolling, we might not get full 100 items if they are lazy loaded.
+        # But we get the initial batch (usually 20-30). 
+        # For Vercel optimization, this is a necessary trade-off unless we reverse-engineer the AJAX API.
+        # However, many sites include a decent amount of initial data.
+        
+        for index, item in enumerate(items):
             try:
-                # Extracting data based on user snippet
-                # <span class="number-prefix">1. </span>
-                # <span class="Info__Title__Place">Name</span>
-                
+                # Rank
                 rank_tag = item.select_one('.number-prefix')
                 rank = rank_tag.get_text(strip=True).replace('.', '') if rank_tag else str(index + 1)
                 
+                # Name
                 name_tag = item.select_one('.Info__Title__Place')
-                # Name might contain span for region, need to handle
                 if name_tag:
-                     # Get text but exclude children if needed, or just get all text
-                     # Example: 카페 유자 <span>남해</span> -> We want "카페 유자"
-                     # The span inside is region.
                      region_span = name_tag.select_one('span')
                      if region_span:
-                         # Temporarily remove it to get name only? or just take full text
-                         # Let's clean it.
                          region_text = region_span.get_text(strip=True)
                          full_text = name_tag.get_text(strip=True)
-                         # Simple hack: remove region text from full text if it ends with it
                          name = full_text.replace(region_text, '').strip()
                      else:
                          name = name_tag.get_text(strip=True)
                 else:
                     name = "Unknown"
                 
-                score_tag = item.select_one('.Score span') # 83
+                # Score
+                score_tag = item.select_one('.Score span')
                 score = score_tag.get_text(strip=True) if score_tag else None
                 
                 # Category
                 cat_tag = item.select_one('.Category span')
                 category = cat_tag.get_text(strip=True) if cat_tag else ""
                 
-                # Hash/Tags
+                # Hash
                 hashes = [h.get_text(strip=True) for h in item.select('.Hash span')]
                 hash_str = ", ".join(hashes)
                 
@@ -118,17 +68,25 @@ def scrape_diningcode(query):
                     "score": score,
                     "category": category,
                     "hash": hash_str,
-                    "link": "https://www.diningcode.com" + item['href']
+                    "link": "https://www.diningcode.com" + item.get('href', '')
                 })
                 
             except Exception as e:
                 print(f"Error parsing item {index}: {e}")
                 continue
-                
-        browser.close()
         
-    return {"items": results}
+        count = len(results)
+        return {
+            "items": results,
+            "meta": {
+                "count": count,
+                "note": "Lite scraping mode (Vercel compatible). Showing initial results."
+            }
+        }
+
+    except Exception as e:
+        print(f"Scraping error: {e}")
+        return {"error": str(e), "items": []}
 
 if __name__ == "__main__":
-    # Test locally
     print(scrape_diningcode("강남역 맛집"))
