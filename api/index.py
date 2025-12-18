@@ -1,6 +1,8 @@
 from flask import Flask, jsonify
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app)  # Enable CORS for all routes
 
 @app.route('/')
 def home():
@@ -15,6 +17,5 @@ def get_data():
     })
 
 # Vercel requires the app to be exposed as 'app'
-# No app.run() needed for Vercel, but useful for local testing
 if __name__ == '__main__':
     app.run(debug=True)
