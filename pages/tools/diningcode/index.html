@@ -180,7 +180,7 @@
             try {
                 // Vercel Serverless Function limitation workaround hint for user
                 // Using relative path to api
-                const response = await fetch(`/api/diningcode?query=${encodeURIComponent(query)}`);
+                const response = await fetch(`https://api.ctrl-j.xyz/api/diningcode?query=${encodeURIComponent(query)}`);
                 const data = await response.json();
 
                 if (data.error) {

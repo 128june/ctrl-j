@@ -1,0 +1,20 @@
+name: Deploy to Self-Hosted Mac Mini
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: self-hosted
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Make deploy script executable
+      run: chmod +x scripts/deploy.sh
+
+    - name: Run deployment script
+      run: ./scripts/deploy.sh
