@@ -13,6 +13,16 @@ Thumbs.db
 *.tmp
 *.temp
 
+# 런타임 파일 (프로세스 ID 등)
+*.pid
+
+# 시스템 설정 및 로그 (로컬 전용)
+*.plist
+launchd.*.log
+
+# 가상환경
+.venv/
+
 # 빌드 결과물
 dist/
 build/

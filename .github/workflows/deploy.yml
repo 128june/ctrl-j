@@ -13,8 +13,8 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v3
 
-    - name: Make deploy script executable
-      run: chmod +x scripts/deploy.sh
+    - name: Make scripts executable
+      run: chmod +x scripts/start_services.sh scripts/deploy.sh scripts/start_backend.sh
 
     - name: Run deployment script
-      run: ./scripts/deploy.sh
+      run: ./scripts/start_services.sh

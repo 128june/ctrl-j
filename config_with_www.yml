@@ -1,0 +1,11 @@
+tunnel: 32f2f8d3-bfe2-4438-9f49-84dd3993ad94
+credentials-file: /Users/june/.cloudflared/32f2f8d3-bfe2-4438-9f49-84dd3993ad94.json
+
+ingress:
+  - hostname: api.ctrl-j.xyz
+    service: http://localhost:8080
+  - hostname: ctrl-j.xyz
+    service: http://localhost:8000
+  - hostname: www.ctrl-j.xyz
+    service: http://localhost:8000
+  - service: http_status:404
