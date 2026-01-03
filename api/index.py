@@ -1,7 +1,5 @@
 from flask import Flask, jsonify, request
 from flask_cors import CORS
-# Import scraper - note the relative import structure for Vercel may vary, 
-# but for local 'api.scraper' or just 'scraper' if in same dir.
 try:
     from api.scraper import scrape_diningcode
 except ImportError:
@@ -15,7 +13,7 @@ CORS(app)  # Enable CORS for all routes
 
 @app.route('/')
 def home():
-    return jsonify({"message": "Hello from Python API on Vercel!"})
+    return jsonify({"message": "Hello from Python API!"})
 
 @app.route('/api/data')
 def get_data():
@@ -40,6 +38,5 @@ def diningcode_api():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-# Vercel requires the app to be exposed as 'app'
 if __name__ == '__main__':
     app.run(debug=True)
