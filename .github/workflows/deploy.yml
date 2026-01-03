@@ -16,5 +16,7 @@ jobs:
     - name: Make scripts executable
       run: chmod +x scripts/start_services.sh scripts/deploy.sh scripts/start_backend.sh
 
-    - name: Run deployment script
-      run: ./scripts/start_services.sh
+    - name: Restart Services via Launchctl
+      run: |
+        launchctl unload ~/Library/LaunchAgents/com.june.ctrl-j.plist
+        launchctl load ~/Library/LaunchAgents/com.june.ctrl-j.plist
