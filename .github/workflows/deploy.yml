@@ -18,5 +18,6 @@ jobs:
 
     - name: Restart Services via Launchctl
       run: |
+        cp com.june.ctrl-j.plist ~/Library/LaunchAgents/
         launchctl unload ~/Library/LaunchAgents/com.june.ctrl-j.plist
         launchctl load ~/Library/LaunchAgents/com.june.ctrl-j.plist
